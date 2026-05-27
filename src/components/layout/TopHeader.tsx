@@ -1,16 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, Bell, HelpCircle, Settings, Menu } from "lucide-react";
+import { Search, Bell, HelpCircle, Settings } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 
 interface TopHeaderProps {
   title?: string;
-  onMenuClick?: () => void;
 }
 
-export function TopHeader({ title, onMenuClick }: TopHeaderProps) {
+export function TopHeader({ title }: TopHeaderProps) {
   const { role } = useAuth();
   const [searchValue, setSearchValue] = useState("");
 
@@ -19,14 +18,8 @@ export function TopHeader({ title, onMenuClick }: TopHeaderProps) {
 
   return (
     <header className="flex justify-between items-center w-full px-6 h-16 sticky top-0 z-50 bg-white shadow-[0_1px_3px_rgba(23,92,211,0.08)] border-b border-[#c3c6d6]/20">
-      {/* Mobile: menu + title */}
+      {/* Mobile: logo only */}
       <div className="flex items-center gap-3 md:hidden">
-        <button
-          onClick={onMenuClick}
-          className="text-[#424654] p-2 rounded-full hover:bg-[#f3f3fd] transition-colors"
-        >
-          <Menu className="w-5 h-5" />
-        </button>
         <span className="text-lg font-bold text-[#0045a9]">RdvPro</span>
       </div>
 

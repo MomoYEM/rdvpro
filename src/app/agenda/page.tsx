@@ -6,6 +6,7 @@ import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { AppointmentStatusBadge } from "@/components/ui/StatusBadge";
 import { Modal } from "@/components/ui/Modal";
 import { mockAppointments } from "@/data/mockAppointments";
+import { nameToSlug } from "@/lib/utils";
 import { Appointment, AppointmentStatus } from "@/types";
 import {
   ChevronLeft,
@@ -40,7 +41,7 @@ const FULL_WEEK_DATES = [
 ];
 
 export default function AgendaPage() {
-  const [viewMode, setViewMode] = useState<ViewMode>("semaine");
+  const [viewMode, setViewMode] = useState<ViewMode>("jour");
   const [selectedDay, setSelectedDay] = useState("2026-05-27");
   const [statusFilter, setStatusFilter] = useState<AppointmentStatus | "tous">("tous");
   const [selectedApt, setSelectedApt] = useState<Appointment | null>(null);
@@ -85,47 +86,49 @@ export default function AgendaPage() {
         </div>
 
         {/* Controls */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          {/* Navigation */}
-          <div className="flex items-center gap-2">
-            <button className="p-2 rounded-lg border border-[#c3c6d6] bg-white hover:bg-[#f3f3fd] transition-colors">
-              <ChevronLeft className="w-4 h-4 text-[#424654]" />
-            </button>
-            <span className="text-sm font-semibold text-[#191b23] min-w-[120px] text-center">
-              Mai 2026
-            </span>
-            <button className="p-2 rounded-lg border border-[#c3c6d6] bg-white hover:bg-[#f3f3fd] transition-colors">
-              <ChevronRight className="w-4 h-4 text-[#424654]" />
-            </button>
-          </div>
-
-          {/* View toggle */}
-          <div className="flex bg-[#f3f3fd] rounded-lg p-1 border border-[#c3c6d6]/50">
-            {(["jour", "semaine"] as ViewMode[]).map((mode) => (
-              <button
-                key={mode}
-                onClick={() => setViewMode(mode)}
-                className={`px-4 py-1.5 rounded-md text-sm font-semibold transition-all capitalize ${
-                  viewMode === mode
-                    ? "bg-white text-[#0045a9] shadow-sm"
-                    : "text-[#424654] hover:text-[#191b23]"
-                }`}
-              >
-                {mode === "jour" ? "Jour" : "Semaine"}
+        <div className="space-y-3">
+          <div className="flex items-center gap-3 flex-wrap">
+            {/* Navigation */}
+            <div className="flex items-center gap-2">
+              <button className="p-2 rounded-lg border border-[#c3c6d6] bg-white hover:bg-[#f3f3fd] transition-colors">
+                <ChevronLeft className="w-4 h-4 text-[#424654]" />
               </button>
-            ))}
+              <span className="text-sm font-semibold text-[#191b23] min-w-[90px] text-center">
+                Mai 2026
+              </span>
+              <button className="p-2 rounded-lg border border-[#c3c6d6] bg-white hover:bg-[#f3f3fd] transition-colors">
+                <ChevronRight className="w-4 h-4 text-[#424654]" />
+              </button>
+            </div>
+
+            {/* View toggle — masqué sur mobile car vue semaine illisible */}
+            <div className="hidden sm:flex bg-[#f3f3fd] rounded-lg p-1 border border-[#c3c6d6]/50">
+              {(["jour", "semaine"] as ViewMode[]).map((mode) => (
+                <button
+                  key={mode}
+                  onClick={() => setViewMode(mode)}
+                  className={`px-4 py-1.5 rounded-md text-sm font-semibold transition-all ${
+                    viewMode === mode
+                      ? "bg-white text-[#0045a9] shadow-sm"
+                      : "text-[#424654] hover:text-[#191b23]"
+                  }`}
+                >
+                  {mode === "jour" ? "Jour" : "Semaine"}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Status filter */}
-          <div className="flex gap-2 overflow-x-auto pb-1 flex-wrap">
+          {/* Status filter — scroll horizontal sur mobile */}
+          <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
             {STATUS_FILTERS.map((f) => (
               <button
                 key={f.value}
                 onClick={() => setStatusFilter(f.value)}
-                className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition-colors ${
+                className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap flex-shrink-0 transition-colors ${
                   statusFilter === f.value
                     ? "bg-[#0045a9] text-white"
-                    : "bg-[#f3f3fd] text-[#424654] border border-[#c3c6d6] hover:bg-[#e7e7f2]"
+                    : "bg-white text-[#424654] border border-[#c3c6d6] hover:bg-[#f3f3fd]"
                 }`}
               >
                 {f.label}
@@ -231,42 +234,59 @@ export default function AgendaPage() {
               ))}
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-[#c3c6d6]/50 overflow-hidden">
+            <div className="space-y-3">
               {dayApts.length === 0 ? (
-                <div className="py-16 text-center text-[#737785]">
-                  <Calendar className="w-10 h-10 mx-auto mb-3 opacity-30" />
-                  <p className="text-sm font-medium">Aucun rendez-vous ce jour</p>
+                <div className="bg-white rounded-xl py-16 text-center border border-[#c3c6d6]/50">
+                  <Calendar className="w-10 h-10 mx-auto mb-3 opacity-30 text-[#737785]" />
+                  <p className="text-sm font-medium text-[#737785]">Aucun rendez-vous ce jour</p>
                 </div>
               ) : (
-                <ul className="divide-y divide-[#c3c6d6]/30">
-                  {dayApts.map((apt) => (
-                    <li
-                      key={apt.id}
-                      className={`flex items-center justify-between p-4 hover:bg-[#f3f3fd] cursor-pointer transition-colors ${
-                        apt.status === "termine" ? "opacity-60" : ""
-                      } ${apt.status === "patient-arrive" ? "border-l-4 border-l-[#175cd3]" : ""}`}
+                dayApts.map((apt) => (
+                  <div
+                    key={apt.id}
+                    className={`bg-white rounded-xl border shadow-sm overflow-hidden transition-shadow hover:shadow-md ${
+                      apt.status === "patient-arrive"
+                        ? "border-l-4 border-l-[#175cd3] border-[#c3c6d6]/50"
+                        : "border-[#c3c6d6]/50"
+                    } ${apt.status === "termine" ? "opacity-60" : ""}`}
+                  >
+                    {/* Main row */}
+                    <div
+                      className="flex items-center gap-3 p-4 cursor-pointer"
                       onClick={() => setSelectedApt(apt)}
                     >
-                      <div className="flex items-center gap-4">
-                        <div className="text-center w-14">
-                          <div className="text-sm font-bold text-[#191b23]">{apt.time}</div>
-                          <div className="text-xs text-[#737785]">{apt.duration} min</div>
-                        </div>
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold ${apt.colorClass}`}>
-                          {apt.patientInitials}
-                        </div>
-                        <div>
-                          <div className="text-sm font-semibold text-[#191b23]">{apt.patientName}</div>
-                          <div className="text-xs text-[#424654]">{apt.reason}</div>
-                        </div>
+                      <div className="text-center w-12 flex-shrink-0">
+                        <div className="text-sm font-bold text-[#191b23]">{apt.time}</div>
+                        <div className="text-xs text-[#737785]">{apt.duration}min</div>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs text-[#737785] hidden sm:block">{apt.phone}</span>
-                        <AppointmentStatusBadge status={apt.status} />
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${apt.colorClass}`}>
+                        {apt.patientInitials}
                       </div>
-                    </li>
-                  ))}
-                </ul>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-bold text-[#191b23] truncate">{apt.patientName}</div>
+                        <div className="text-xs text-[#424654] truncate">{apt.reason}</div>
+                      </div>
+                      <AppointmentStatusBadge status={apt.status} />
+                    </div>
+                    {/* Action bar — toujours visible sur mobile */}
+                    <div className="flex border-t border-[#c3c6d6]/30">
+                      <a
+                        href={`tel:${apt.phone}`}
+                        className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-semibold text-[#424654] hover:bg-[#f3f3fd] transition-colors border-r border-[#c3c6d6]/30"
+                      >
+                        <Phone className="w-3.5 h-3.5" />
+                        Appeler
+                      </a>
+                      <Link
+                        href={`/patients/${nameToSlug(apt.patientName)}`}
+                        className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-semibold text-[#0045a9] hover:bg-[#dae2ff]/30 transition-colors"
+                      >
+                        <User className="w-3.5 h-3.5" />
+                        Dossier
+                      </Link>
+                    </div>
+                  </div>
+                ))
               )}
             </div>
           </div>
@@ -313,7 +333,7 @@ export default function AgendaPage() {
 
             <div className="flex gap-3 pt-2">
               <Link
-                href={`/patients/${selectedApt.patientName.toLowerCase().replace(/ /g, "-").normalize("NFD").replace(/[̀-ͯ]/g, "")}`}
+                href={`/patients/${nameToSlug(selectedApt.patientName)}`}
                 className="flex-1 py-2.5 text-center bg-[#0045a9] text-white rounded-lg text-sm font-semibold hover:bg-[#003d96] transition-colors"
               >
                 Voir le dossier
