@@ -33,27 +33,28 @@ export default function PatientsPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h2 className="text-2xl font-bold text-[#191b23]">Patients</h2>
-            <p className="text-sm text-[#424654] mt-0.5">
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#191b23]">Patients</h2>
+            <p className="text-xs sm:text-sm text-[#424654] mt-0.5">
               {mockPatients.length} patients enregistrés
             </p>
           </div>
           <Link
             href="/agenda/nouveau"
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#0045a9] text-white rounded-lg text-sm font-semibold hover:bg-[#003d96] transition-colors shadow-sm"
+            className="flex items-center gap-1.5 px-3 py-2 bg-[#0045a9] text-white rounded-lg text-xs sm:text-sm font-semibold hover:bg-[#003d96] transition-colors shadow-sm flex-shrink-0"
           >
             <UserPlus className="w-4 h-4" />
-            Nouveau patient
+            <span className="hidden sm:inline">Nouveau patient</span>
+            <span className="sm:hidden">Nouveau</span>
           </Link>
         </div>
 
         {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-3">
-          <div className="relative flex-1 max-w-md">
+        <div className="space-y-3">
+          <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#737785]" />
             <input
               type="text"
@@ -63,7 +64,7 @@ export default function PatientsPage() {
               className="w-full pl-9 pr-4 py-2.5 border border-[#c3c6d6] rounded-lg text-sm focus:border-[#175cd3] focus:ring-1 focus:ring-[#175cd3] outline-none h-11"
             />
           </div>
-          <div className="flex bg-[#f3f3fd] rounded-lg p-1 border border-[#c3c6d6]/50">
+          <div className="flex bg-[#f3f3fd] rounded-lg p-1 border border-[#c3c6d6]/50 w-full sm:w-fit">
             {[
               { value: "tous", label: "Tous" },
               { value: "actif", label: "Avec RDV" },
@@ -72,7 +73,7 @@ export default function PatientsPage() {
               <button
                 key={f.value}
                 onClick={() => setFilter(f.value as typeof filter)}
-                className={`px-4 py-1.5 rounded-md text-sm font-semibold transition-all ${
+                className={`flex-1 sm:flex-none px-3 sm:px-4 py-1.5 rounded-md text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${
                   filter === f.value
                     ? "bg-white text-[#0045a9] shadow-sm"
                     : "text-[#424654] hover:text-[#191b23]"

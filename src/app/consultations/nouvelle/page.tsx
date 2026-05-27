@@ -99,20 +99,28 @@ export default function NouvelleConsultationPage() {
 
         {/* Patient banner */}
         {patient && (
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-[#c3c6d6]/50 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className={`w-14 h-14 rounded-full flex items-center justify-center text-base font-bold ${patient.colorClass}`}>
-                {patient.initials}
+          <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm border border-[#c3c6d6]/50">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center text-sm sm:text-base font-bold flex-shrink-0 ${patient.colorClass}`}>
+                  {patient.initials}
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-sm sm:text-base font-bold text-[#191b23] truncate">{patient.fullName}</h3>
+                  <p className="text-xs text-[#424654]">
+                    Dossier #4829 • Née le 14/05/1985
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-base font-bold text-[#191b23]">{patient.fullName}</h3>
-                <p className="text-xs text-[#424654]">
-                  Dossier #4829 • Née le 14/05/1985
-                </p>
-              </div>
+              {patient.alerts && patient.alerts.length > 0 && (
+                <span className="hidden md:inline-flex items-center gap-1.5 px-3 py-1 bg-[#ffdad6] text-[#93000a] rounded-full text-xs font-bold flex-shrink-0">
+                  <AlertTriangle className="w-3.5 h-3.5" />
+                  {patient.alerts[0]}
+                </span>
+              )}
             </div>
             {patient.alerts && patient.alerts.length > 0 && (
-              <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 bg-[#ffdad6] text-[#93000a] rounded-full text-xs font-bold">
+              <span className="md:hidden inline-flex items-center gap-1.5 px-3 py-1 mt-3 bg-[#ffdad6] text-[#93000a] rounded-full text-xs font-bold">
                 <AlertTriangle className="w-3.5 h-3.5" />
                 {patient.alerts[0]}
               </span>
@@ -123,13 +131,13 @@ export default function NouvelleConsultationPage() {
         {/* Form card */}
         <div className="bg-white rounded-2xl shadow-sm border border-[#c3c6d6]/50 relative overflow-hidden">
           <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#0045a9]" />
-          <div className="p-6 space-y-8">
+          <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
             {/* Header form */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#c3c6d6]/30">
-              <h4 className="text-lg font-bold text-[#191b23]">Détails de la consultation</h4>
-              <div className="flex items-center gap-2 bg-[#7cf2f3]/15 px-3 py-1.5 rounded-lg">
-                <Lock className="w-3.5 h-3.5 text-[#006a6a]" />
-                <span className="text-xs font-semibold text-[#006a6a]">Informations confidentielles</span>
+              <h4 className="text-base sm:text-lg font-bold text-[#191b23]">Détails de la consultation</h4>
+              <div className="flex items-center gap-2 bg-[#7cf2f3]/15 px-3 py-1.5 rounded-lg self-start sm:self-auto">
+                <Lock className="w-3.5 h-3.5 text-[#006a6a] flex-shrink-0" />
+                <span className="text-xs font-semibold text-[#006a6a]">Confidentiel</span>
               </div>
             </div>
 
@@ -260,29 +268,30 @@ export default function NouvelleConsultationPage() {
               </div>
 
               {/* Actions */}
-              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2">
                 <button
-                  type="button"
-                  onClick={() => router.back()}
-                  className="flex-1 py-3 border border-[#c3c6d6] text-[#191b23] rounded-xl text-sm font-semibold hover:bg-[#f3f3fd] transition-colors"
+                  type="submit"
+                  onClick={(e) => handleSave(e)}
+                  className="order-1 sm:order-3 flex-1 flex items-center justify-center gap-2 py-3 bg-[#0045a9] text-white rounded-xl text-sm font-semibold hover:bg-[#003d96] transition-colors shadow-sm"
                 >
-                  Annuler
+                  <Save className="w-4 h-4" />
+                  Enregistrer
                 </button>
                 <button
                   type="button"
                   onClick={(e) => handleSave(e, "/agenda/nouveau")}
-                  className="flex-1 flex items-center justify-center gap-2 py-3 border border-[#0045a9] text-[#0045a9] rounded-xl text-sm font-semibold hover:bg-[#dae2ff]/30 transition-colors"
+                  className="order-2 flex-1 flex items-center justify-center gap-2 py-3 border border-[#0045a9] text-[#0045a9] rounded-xl text-sm font-semibold hover:bg-[#dae2ff]/30 transition-colors"
                 >
                   <CalendarPlus className="w-4 h-4" />
-                  Enregistrer et programmer RDV
+                  <span className="hidden sm:inline">Enregistrer et </span>
+                  Programmer RDV
                 </button>
                 <button
-                  type="submit"
-                  onClick={(e) => handleSave(e)}
-                  className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#0045a9] text-white rounded-xl text-sm font-semibold hover:bg-[#003d96] transition-colors shadow-sm"
+                  type="button"
+                  onClick={() => router.back()}
+                  className="order-3 sm:order-1 flex-1 py-3 border border-[#c3c6d6] text-[#191b23] rounded-xl text-sm font-semibold hover:bg-[#f3f3fd] transition-colors"
                 >
-                  <Save className="w-4 h-4" />
-                  Enregistrer
+                  Annuler
                 </button>
               </div>
             </form>

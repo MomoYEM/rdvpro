@@ -80,16 +80,16 @@ export default function RapportsPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4">
           <div>
             <div className="flex items-center gap-2 text-[#0045a9] mb-1">
               <BarChart3 className="w-4 h-4" />
               <span className="text-xs font-bold uppercase tracking-widest">Activité</span>
             </div>
-            <h2 className="text-2xl font-bold text-[#191b23]">Aperçu de l&apos;activité</h2>
-            <p className="text-sm text-[#424654] mt-0.5">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#191b23]">Aperçu de l&apos;activité</h2>
+            <p className="text-xs sm:text-sm text-[#424654] mt-0.5">
               Statistiques et tendances du cabinet.
             </p>
           </div>
@@ -125,61 +125,61 @@ export default function RapportsPage() {
         </div>
 
         {/* KPI cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white rounded-2xl p-5 shadow-sm border border-[#c3c6d6]/50">
-            <div className="flex items-center justify-between mb-3">
-              <div className="w-10 h-10 rounded-full bg-[#dae2ff] flex items-center justify-center">
-                <Calendar className="w-5 h-5 text-[#0045a9]" />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          <div className="bg-white rounded-2xl p-3 sm:p-5 shadow-sm border border-[#c3c6d6]/50">
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#dae2ff] flex items-center justify-center">
+                <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-[#0045a9]" />
               </div>
               <span className="text-xs text-[#006a6a] font-semibold flex items-center gap-0.5">
                 <TrendingUp className="w-3 h-3" /> +8%
               </span>
             </div>
-            <div className="text-3xl font-bold text-[#191b23] mb-0.5">{stats.rdv}</div>
+            <div className="text-2xl sm:text-3xl font-bold text-[#191b23] mb-0.5">{stats.rdv}</div>
             <p className="text-xs text-[#424654] font-medium">Rendez-vous</p>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 shadow-sm border border-[#c3c6d6]/50">
-            <div className="flex items-center justify-between mb-3">
-              <div className="w-10 h-10 rounded-full bg-[#ccece9] flex items-center justify-center">
-                <Users className="w-5 h-5 text-[#006a6a]" />
+          <div className="bg-white rounded-2xl p-3 sm:p-5 shadow-sm border border-[#c3c6d6]/50">
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#ccece9] flex items-center justify-center">
+                <Users className="w-4 h-4 sm:w-5 sm:h-5 text-[#006a6a]" />
               </div>
               <span className="text-xs text-[#006a6a] font-semibold flex items-center gap-0.5">
                 <TrendingUp className="w-3 h-3" /> +5%
               </span>
             </div>
-            <div className="text-3xl font-bold text-[#191b23] mb-0.5">{stats.patients}</div>
+            <div className="text-2xl sm:text-3xl font-bold text-[#191b23] mb-0.5">{stats.patients}</div>
             <p className="text-xs text-[#424654] font-medium">Patients reçus</p>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 shadow-sm border border-[#c3c6d6]/50">
-            <div className="flex items-center justify-between mb-3">
-              <div className="w-10 h-10 rounded-full bg-[#dae2ff] flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 text-[#0045a9]" />
+          <div className="bg-white rounded-2xl p-3 sm:p-5 shadow-sm border border-[#c3c6d6]/50">
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#dae2ff] flex items-center justify-center">
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-[#0045a9]" />
               </div>
               <span className="text-xs text-[#006a6a] font-semibold flex items-center gap-0.5">
                 <TrendingUp className="w-3 h-3" /> +3%
               </span>
             </div>
-            <div className="text-3xl font-bold text-[#191b23] mb-0.5">{stats.confirmes}%</div>
-            <p className="text-xs text-[#424654] font-medium">Taux de confirmation</p>
+            <div className="text-2xl sm:text-3xl font-bold text-[#191b23] mb-0.5">{stats.confirmes}%</div>
+            <p className="text-xs text-[#424654] font-medium">Taux confirmation</p>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 shadow-sm border border-[#c3c6d6]/50">
-            <div className="flex items-center justify-between mb-3">
-              <div className="w-10 h-10 rounded-full bg-[#dae2ff] flex items-center justify-center">
-                <Users className="w-5 h-5 text-[#175cd3]" />
+          <div className="bg-white rounded-2xl p-3 sm:p-5 shadow-sm border border-[#c3c6d6]/50">
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#dae2ff] flex items-center justify-center">
+                <Users className="w-4 h-4 sm:w-5 sm:h-5 text-[#175cd3]" />
               </div>
               <span className="text-xs text-[#006a6a] font-semibold flex items-center gap-0.5">
                 <TrendingUp className="w-3 h-3" /> +12%
               </span>
             </div>
-            <div className="text-3xl font-bold text-[#191b23] mb-0.5">{stats.nouveaux}</div>
+            <div className="text-2xl sm:text-3xl font-bold text-[#191b23] mb-0.5">{stats.nouveaux}</div>
             <p className="text-xs text-[#424654] font-medium">Nouveaux patients</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
           {/* Weekly bar chart */}
           <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-[#c3c6d6]/50">
             <div className="flex items-center justify-between mb-6">
@@ -266,7 +266,7 @@ export default function RapportsPage() {
         </div>
 
         {/* Cancellations and upcoming */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#c3c6d6]/50">
             <h3 className="text-base font-semibold text-[#191b23] mb-4 flex items-center gap-2">
               <Clock className="w-4 h-4 text-[#737785]" />

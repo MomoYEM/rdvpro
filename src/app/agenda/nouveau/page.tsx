@@ -79,18 +79,18 @@ export default function NouveauRendezVousPage() {
         />
       )}
 
-      <div className="max-w-2xl mx-auto space-y-6">
+      <div className="max-w-2xl mx-auto space-y-4 md:space-y-6">
         {/* Header */}
         <div>
-          <h2 className="text-2xl font-bold text-[#191b23]">Nouveau Rendez-vous</h2>
-          <p className="text-sm text-[#424654] mt-1">
+          <h2 className="text-xl sm:text-2xl font-bold text-[#191b23]">Nouveau Rendez-vous</h2>
+          <p className="text-xs sm:text-sm text-[#424654] mt-1">
             Remplissez les informations pour créer un rendez-vous.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
           {/* Patient */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-[#c3c6d6]/50">
+          <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-[#c3c6d6]/50">
             <h3 className="text-sm font-semibold text-[#424654] mb-4 uppercase tracking-wide">
               Patient
             </h3>
@@ -165,7 +165,7 @@ export default function NouveauRendezVousPage() {
           </div>
 
           {/* Détails RDV */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-[#c3c6d6]/50">
+          <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-[#c3c6d6]/50">
             <h3 className="text-sm font-semibold text-[#424654] mb-4 uppercase tracking-wide">
               Détails du rendez-vous
             </h3>
@@ -242,7 +242,7 @@ export default function NouveauRendezVousPage() {
           </div>
 
           {/* Notes & rappel */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-[#c3c6d6]/50">
+          <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-[#c3c6d6]/50">
             <h3 className="text-sm font-semibold text-[#424654] mb-4 uppercase tracking-wide">
               Notes & Rappel
             </h3>

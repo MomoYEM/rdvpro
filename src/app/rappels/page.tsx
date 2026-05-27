@@ -59,26 +59,26 @@ export default function RappelsPage() {
     <DashboardLayout>
       {toast && <Toast message={toast.msg} type={toast.type} onClose={() => setToast(null)} />}
 
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4">
           <div>
             <div className="flex items-center gap-2 text-[#0045a9] mb-1">
               <CheckCircle className="w-4 h-4" />
               <span className="text-xs font-bold uppercase tracking-widest">Gestion Quotidienne</span>
             </div>
-            <h2 className="text-2xl font-bold text-[#191b23]">Rappels et confirmations</h2>
-            <p className="text-sm text-[#424654] mt-0.5">
-              Gérez les rendez-vous nécessitant une action de votre part.
+            <h2 className="text-xl sm:text-2xl font-bold text-[#191b23]">Rappels et confirmations</h2>
+            <p className="text-xs sm:text-sm text-[#424654] mt-0.5">
+              Rendez-vous nécessitant une action.
             </p>
           </div>
-          <div className="flex items-center gap-2 bg-[#f3f3fd] px-4 py-2 rounded-full border border-[#c3c6d6]/50 shadow-sm">
-            <Calendar className="w-4 h-4 text-[#424654]" />
-            <span className="text-sm font-semibold text-[#191b23] capitalize">{dateStr}</span>
+          <div className="flex items-center gap-2 bg-[#f3f3fd] px-3 sm:px-4 py-2 rounded-full border border-[#c3c6d6]/50 shadow-sm self-start sm:self-auto">
+            <Calendar className="w-4 h-4 text-[#424654] flex-shrink-0" />
+            <span className="text-xs sm:text-sm font-semibold text-[#191b23] capitalize">{dateStr}</span>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
           {/* Left: À confirmer */}
           <div className="lg:col-span-2 space-y-6">
             <section>
@@ -98,7 +98,7 @@ export default function RappelsPage() {
                 {reminders.map((rem) => (
                   <div
                     key={rem.id}
-                    className="bg-white rounded-xl p-4 sm:p-5 border border-[#c3c6d6]/50 shadow-sm relative overflow-hidden hover:shadow-md transition-shadow"
+                    className="bg-white rounded-xl border border-[#c3c6d6]/50 shadow-sm relative overflow-hidden hover:shadow-md transition-shadow"
                   >
                     <div
                       className={`absolute left-0 top-0 bottom-0 w-1 rounded-l-xl ${
@@ -106,25 +106,24 @@ export default function RappelsPage() {
                       }`}
                     />
 
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                      {/* Patient info */}
-                      <div className="flex items-start gap-3">
-                        <div className={`w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 ${rem.colorClass}`}>
+                    {/* Patient info */}
+                    <div className="flex items-start justify-between gap-2 p-3 sm:p-5 pl-4 sm:pl-6">
+                      <div className="flex items-start gap-3 min-w-0 flex-1">
+                        <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 ${rem.colorClass}`}>
                           {rem.patientInitials}
                         </div>
-                        <div>
-                          <h4 className="text-sm font-bold text-[#191b23]">{rem.patientName}</h4>
-                          <div className="flex flex-wrap items-center gap-2 mt-1">
-                            <span className="text-xs text-[#424654]">{rem.time} ({rem.duration} min)</span>
-                            <span className="text-xs bg-[#ededf7] text-[#424654] px-2 py-0.5 rounded">{rem.reason}</span>
+                        <div className="min-w-0 flex-1">
+                          <h4 className="text-sm font-bold text-[#191b23] truncate">{rem.patientName}</h4>
+                          <div className="flex flex-wrap items-center gap-1.5 mt-1">
+                            <span className="text-xs text-[#424654]">{rem.time} ({rem.duration}min)</span>
+                            <span className="text-xs bg-[#ededf7] text-[#424654] px-2 py-0.5 rounded truncate max-w-[180px]">{rem.reason}</span>
                           </div>
                           {rem.lastContact && (
-                            <p className="text-xs text-[#737785] mt-1">{rem.lastContact}</p>
+                            <p className="text-xs text-[#737785] mt-1 truncate">{rem.lastContact}</p>
                           )}
                         </div>
                       </div>
 
-                      {/* Status */}
                       <div className="flex-shrink-0">
                         <AppointmentStatusBadge status={rem.status} />
                       </div>
@@ -132,50 +131,49 @@ export default function RappelsPage() {
 
                     {/* Actions */}
                     {rem.status !== "confirme" && rem.status !== "reporte" && (
-                      <div className="flex flex-wrap gap-2 mt-4 pt-3 border-t border-[#c3c6d6]/30">
-                        <button
-                          onClick={() => handleConfirm(rem.id, rem.patientName)}
-                          className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 bg-[#0045a9] text-white rounded-lg text-xs font-semibold hover:bg-[#003d96] transition-colors shadow-sm"
-                        >
-                          <CheckCircle className="w-3.5 h-3.5" />
-                          Confirmer
-                        </button>
-                        <a
-                          href={buildWhatsAppLink(rem.patientPhone, rem.patientName, rem.time)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={() => setToast({ msg: `${rem.patientName} — Message WhatsApp ouvert`, type: "success" })}
-                          className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 bg-[#25d366] text-white rounded-lg text-xs font-semibold hover:bg-[#1ebe5d] transition-colors shadow-sm"
-                        >
-                          <MessageSquare className="w-3.5 h-3.5" />
-                          WhatsApp
-                        </a>
-                        <a
-                          href={`tel:${rem.patientPhone ?? `+${CABINET_PHONE}`}`}
-                          className="flex items-center justify-center gap-1.5 px-3 py-2 border border-[#737785] text-[#191b23] rounded-lg text-xs font-semibold hover:bg-[#f3f3fd] transition-colors"
-                          title="Appeler"
-                        >
-                          <Phone className="w-3.5 h-3.5" />
-                        </a>
-                        <button
-                          onClick={() => handleNoAnswer(rem.id, rem.patientName)}
-                          className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 border border-[#737785] text-[#191b23] rounded-lg text-xs font-semibold hover:bg-[#f3f3fd] transition-colors"
-                        >
-                          <PhoneMissed className="w-3.5 h-3.5" />
-                          Ne répond pas
-                        </button>
-                        <button
-                          onClick={() => handleReport(rem.id, rem.patientName)}
-                          className="flex items-center justify-center p-2 text-[#424654] hover:bg-[#f3f3fd] rounded-lg transition-colors"
-                          title="Reporter"
-                        >
-                          <CalendarOff className="w-4 h-4" />
-                        </button>
+                      <div className="px-3 pb-3 sm:px-5 sm:pb-4 pt-3 border-t border-[#c3c6d6]/30 space-y-2">
+                        {/* Actions principales */}
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleConfirm(rem.id, rem.patientName)}
+                            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 bg-[#0045a9] text-white text-xs font-semibold rounded-lg hover:bg-[#003d96] transition-colors shadow-sm"
+                          >
+                            <CheckCircle className="w-4 h-4" />
+                            Confirmer
+                          </button>
+                          <a
+                            href={buildWhatsAppLink(rem.patientPhone, rem.patientName, rem.time)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => setToast({ msg: `${rem.patientName} — Message WhatsApp ouvert`, type: "success" })}
+                            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 bg-[#25d366] text-white text-xs font-semibold rounded-lg hover:bg-[#1ebe5d] transition-colors shadow-sm"
+                          >
+                            <MessageSquare className="w-4 h-4" />
+                            WhatsApp
+                          </a>
+                        </div>
+                        {/* Actions secondaires */}
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleNoAnswer(rem.id, rem.patientName)}
+                            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-white text-[#424654] text-xs font-semibold rounded-lg border border-[#c3c6d6] hover:bg-[#f3f3fd] transition-colors"
+                          >
+                            <PhoneMissed className="w-3.5 h-3.5" />
+                            Pas de réponse
+                          </button>
+                          <button
+                            onClick={() => handleReport(rem.id, rem.patientName)}
+                            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-white text-[#424654] text-xs font-semibold rounded-lg border border-[#c3c6d6] hover:bg-[#f3f3fd] transition-colors"
+                          >
+                            <CalendarOff className="w-3.5 h-3.5" />
+                            Reporter
+                          </button>
+                        </div>
                       </div>
                     )}
 
                     {(rem.status === "confirme" || rem.status === "reporte") && (
-                      <div className="mt-3 flex items-center gap-1.5 text-xs text-[#006a6a] font-semibold">
+                      <div className="px-4 pb-3 flex items-center gap-1.5 text-xs text-[#006a6a] font-semibold">
                         <CheckCircle className="w-3.5 h-3.5" />
                         {rem.status === "confirme" ? "Rendez-vous confirmé" : "Rendez-vous reporté"}
                       </div>

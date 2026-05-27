@@ -54,7 +54,7 @@ export default function PatientFichePage({ params }: { params: Promise<{ slug: s
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Breadcrumb */}
         <Link
           href="/patients"
@@ -65,35 +65,35 @@ export default function PatientFichePage({ params }: { params: Promise<{ slug: s
         </Link>
 
         {/* Patient header card */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#c3c6d6]/50 relative overflow-hidden">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-[#c3c6d6]/50 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-[#175cd3]" />
 
-          <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
-            <div className="flex items-start gap-5">
-              <div className={`w-20 h-20 rounded-2xl flex items-center justify-center text-2xl font-bold flex-shrink-0 ${patient.colorClass}`}>
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 md:gap-6">
+            <div className="flex items-start gap-3 sm:gap-5 min-w-0">
+              <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center text-lg sm:text-2xl font-bold flex-shrink-0 ${patient.colorClass}`}>
                 {patient.initials}
               </div>
-              <div>
-                <h2 className="text-2xl font-bold text-[#191b23]">{patient.fullName}</h2>
-                <p className="text-sm text-[#424654] mt-1">
+              <div className="min-w-0">
+                <h2 className="text-lg sm:text-2xl font-bold text-[#191b23] break-words">{patient.fullName}</h2>
+                <p className="text-xs sm:text-sm text-[#424654] mt-1">
                   {patient.birthDate && formatBirthDate(patient.birthDate)}
                 </p>
 
-                <div className="flex flex-wrap gap-3 mt-3">
-                  <div className="flex items-center gap-1.5 text-sm text-[#424654]">
-                    <Phone className="w-4 h-4 text-[#737785]" />
-                    {patient.phone}
-                  </div>
+                <div className="flex flex-col sm:flex-row sm:flex-wrap gap-1.5 sm:gap-3 mt-3">
+                  <a href={`tel:${patient.phone}`} className="flex items-center gap-1.5 text-xs sm:text-sm text-[#424654] hover:text-[#175cd3]">
+                    <Phone className="w-4 h-4 text-[#737785] flex-shrink-0" />
+                    <span className="truncate">{patient.phone}</span>
+                  </a>
                   {patient.email && (
-                    <div className="flex items-center gap-1.5 text-sm text-[#424654]">
-                      <Mail className="w-4 h-4 text-[#737785]" />
-                      {patient.email}
+                    <div className="flex items-center gap-1.5 text-xs sm:text-sm text-[#424654] min-w-0">
+                      <Mail className="w-4 h-4 text-[#737785] flex-shrink-0" />
+                      <span className="truncate">{patient.email}</span>
                     </div>
                   )}
                   {patient.address && (
-                    <div className="flex items-center gap-1.5 text-sm text-[#424654]">
-                      <MapPin className="w-4 h-4 text-[#737785]" />
-                      {patient.address}
+                    <div className="flex items-center gap-1.5 text-xs sm:text-sm text-[#424654] min-w-0">
+                      <MapPin className="w-4 h-4 text-[#737785] flex-shrink-0" />
+                      <span className="truncate">{patient.address}</span>
                     </div>
                   )}
                 </div>
@@ -103,9 +103,9 @@ export default function PatientFichePage({ params }: { params: Promise<{ slug: s
                     {patient.alerts.map((alert) => (
                       <span
                         key={alert}
-                        className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#ffdad6] text-[#93000a] rounded-full text-xs font-bold"
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#ffdad6] text-[#93000a] rounded-full text-xs font-bold"
                       >
-                        <AlertTriangle className="w-3 h-3" />
+                        <AlertTriangle className="w-3 h-3 flex-shrink-0" />
                         {alert}
                       </span>
                     ))}
@@ -115,17 +115,19 @@ export default function PatientFichePage({ params }: { params: Promise<{ slug: s
             </div>
 
             {/* Quick actions */}
-            <div className="flex flex-wrap gap-2">
-              <Link
-                href={`/consultations/nouvelle?patient=${slug}`}
-                className="flex items-center gap-2 px-4 py-2.5 bg-[#0045a9] text-white rounded-xl text-sm font-semibold hover:bg-[#003d96] transition-colors shadow-sm"
-              >
-                <Stethoscope className="w-4 h-4" />
-                Nouvelle consultation
-              </Link>
+            <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-2 flex-shrink-0">
+              {role === "dentiste" && (
+                <Link
+                  href={`/consultations/nouvelle?patient=${slug}`}
+                  className="flex items-center justify-center gap-2 px-3 py-2 bg-[#0045a9] text-white rounded-xl text-xs sm:text-sm font-semibold hover:bg-[#003d96] transition-colors shadow-sm whitespace-nowrap"
+                >
+                  <Stethoscope className="w-4 h-4" />
+                  Consultation
+                </Link>
+              )}
               <Link
                 href="/agenda/nouveau"
-                className="flex items-center gap-2 px-4 py-2.5 bg-white border border-[#c3c6d6] text-[#191b23] rounded-xl text-sm font-semibold hover:bg-[#f3f3fd] transition-colors"
+                className="flex items-center justify-center gap-2 px-3 py-2 bg-white border border-[#c3c6d6] text-[#191b23] rounded-xl text-xs sm:text-sm font-semibold hover:bg-[#f3f3fd] transition-colors whitespace-nowrap"
               >
                 <Plus className="w-4 h-4" />
                 Nouveau RDV
@@ -138,13 +140,13 @@ export default function PatientFichePage({ params }: { params: Promise<{ slug: s
         {role === "assistante" && <ConfidentialAccessNotice />}
 
         {/* Tabs */}
-        <div className="border-b border-[#c3c6d6]/50 overflow-x-auto">
+        <div className="border-b border-[#c3c6d6]/50 overflow-x-auto no-scrollbar -mx-3 px-3 sm:mx-0 sm:px-0">
           <nav className="flex gap-1 min-w-max">
             {visibleTabs.map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`px-4 py-3 text-sm font-semibold whitespace-nowrap border-b-2 transition-all ${
+                className={`px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold whitespace-nowrap border-b-2 transition-all ${
                   activeTab === tab.key
                     ? "border-[#175cd3] text-[#175cd3]"
                     : "border-transparent text-[#424654] hover:text-[#191b23] hover:border-[#737785]"
@@ -158,9 +160,9 @@ export default function PatientFichePage({ params }: { params: Promise<{ slug: s
         </div>
 
         {/* Tab content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
           {/* Main content */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 md:space-y-6">
             {/* RÉSUMÉ */}
             {activeTab === "resume" && (
               <div className="space-y-6">

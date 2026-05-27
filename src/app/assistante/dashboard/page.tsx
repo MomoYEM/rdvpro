@@ -59,54 +59,52 @@ export default function AssistanteDashboard() {
         />
       )}
 
-      <div className="space-y-8">
+      <div className="space-y-5 md:space-y-8">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-3 md:gap-4">
           <div>
-            <h2 className="text-3xl font-bold text-[#191b23] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#191b23] tracking-tight">
               Bonjour, Nadia 👋
             </h2>
-            <p className="text-lg text-[#424654] mt-1 capitalize">{dateStr}</p>
+            <p className="text-sm md:text-lg text-[#424654] mt-1 capitalize">{dateStr}</p>
           </div>
-          <div className="flex gap-3">
-            <Link
-              href="/agenda/nouveau"
-              className="flex items-center gap-2 px-4 py-2 bg-[#0045a9] text-white rounded-lg text-sm font-semibold hover:bg-[#003d96] transition-colors shadow-sm"
-            >
-              <Plus className="w-4 h-4" />
-              Nouveau RDV
-            </Link>
-          </div>
+          <Link
+            href="/agenda/nouveau"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 bg-[#0045a9] text-white rounded-lg text-sm font-semibold hover:bg-[#003d96] transition-colors shadow-sm"
+          >
+            <Plus className="w-4 h-4" />
+            Nouveau RDV
+          </Link>
         </div>
 
         {/* Notice accès limité */}
         <ConfidentialAccessNotice />
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white rounded-xl p-5 shadow-sm border border-[#c3c6d6]/50">
-            <p className="text-sm text-[#424654] mb-1">RDV du jour</p>
-            <h3 className="text-4xl font-bold text-[#191b23]">{todayApts.length}</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-4">
+          <div className="bg-white rounded-xl p-3 sm:p-4 md:p-5 shadow-sm border border-[#c3c6d6]/50">
+            <p className="text-xs sm:text-sm text-[#424654] mb-1">RDV du jour</p>
+            <h3 className="text-3xl sm:text-4xl font-bold text-[#191b23]">{todayApts.length}</h3>
           </div>
-          <div className="bg-white rounded-xl p-5 shadow-sm border-l-4 border-l-[#006a6a] border border-[#c3c6d6]/50">
-            <p className="text-sm text-[#424654] mb-1">À confirmer</p>
-            <h3 className="text-3xl font-bold text-[#191b23]">{toConfirm.length}</h3>
+          <div className="bg-white rounded-xl p-3 sm:p-4 md:p-5 shadow-sm border-l-4 border-l-[#006a6a] border border-[#c3c6d6]/50">
+            <p className="text-xs sm:text-sm text-[#424654] mb-1">À confirmer</p>
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#191b23]">{toConfirm.length}</h3>
             <div className="mt-1 text-xs font-semibold text-[#006a6a] flex items-center gap-1">
               <Bell className="w-3 h-3" />
               Urgent
             </div>
           </div>
-          <div className="bg-white rounded-xl p-5 shadow-sm border-l-4 border-l-[#853000] border border-[#c3c6d6]/50">
-            <p className="text-sm text-[#424654] mb-1">Rappels</p>
-            <h3 className="text-3xl font-bold text-[#191b23]">{mockReminders.length}</h3>
+          <div className="bg-white rounded-xl p-3 sm:p-4 md:p-5 shadow-sm border-l-4 border-l-[#853000] border border-[#c3c6d6]/50">
+            <p className="text-xs sm:text-sm text-[#424654] mb-1">Rappels</p>
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#191b23]">{mockReminders.length}</h3>
             <div className="mt-1 text-xs font-semibold text-[#853000] flex items-center gap-1">
               <Phone className="w-3 h-3" />
               À contacter
             </div>
           </div>
-          <div className="bg-white rounded-xl p-5 shadow-sm border-l-4 border-l-[#ba1a1a] border border-[#c3c6d6]/50">
-            <p className="text-sm text-[#424654] mb-1">Reports</p>
-            <h3 className="text-3xl font-bold text-[#191b23]">1</h3>
+          <div className="bg-white rounded-xl p-3 sm:p-4 md:p-5 shadow-sm border-l-4 border-l-[#ba1a1a] border border-[#c3c6d6]/50">
+            <p className="text-xs sm:text-sm text-[#424654] mb-1">Reports</p>
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#191b23]">1</h3>
             <div className="mt-1 text-xs font-semibold text-[#ba1a1a] flex items-center gap-1">
               <Clock className="w-3 h-3" />
               Demandés
@@ -114,7 +112,7 @@ export default function AssistanteDashboard() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
           {/* Confirmations */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
@@ -132,24 +130,26 @@ export default function AssistanteDashboard() {
                 return (
                   <div
                     key={apt.id}
-                    className="bg-white rounded-xl p-4 border border-[#c3c6d6]/50 shadow-sm relative overflow-hidden"
+                    className="bg-white rounded-xl p-3 sm:p-4 border border-[#c3c6d6]/50 shadow-sm relative overflow-hidden"
                   >
                     <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#0045a9] rounded-l-xl" />
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex items-center gap-3">
+                    <div className="flex items-start justify-between gap-2 pl-2">
+                      <div className="flex items-center gap-3 min-w-0 flex-1">
                         <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${apt.colorClass}`}>
                           {apt.patientInitials}
                         </div>
-                        <div>
-                          <p className="text-sm font-semibold text-[#191b23]">{apt.patientName}</p>
-                          <div className="flex items-center gap-2 mt-0.5">
+                        <div className="min-w-0">
+                          <p className="text-sm font-semibold text-[#191b23] truncate">{apt.patientName}</p>
+                          <div className="flex items-center gap-2 mt-0.5 flex-wrap">
                             <span className="text-xs text-[#424654]">{apt.time}</span>
-                            <span className="text-xs bg-[#ededf7] text-[#424654] px-2 py-0.5 rounded">{apt.reason}</span>
+                            <span className="text-xs bg-[#ededf7] text-[#424654] px-2 py-0.5 rounded truncate">{apt.reason}</span>
                           </div>
-                          <p className="text-xs text-[#737785] mt-1">{apt.phone}</p>
+                          <p className="text-xs text-[#737785] mt-1 truncate">{apt.phone}</p>
                         </div>
                       </div>
-                      <AppointmentStatusBadge status={displayStatus} />
+                      <div className="flex-shrink-0">
+                        <AppointmentStatusBadge status={displayStatus} />
+                      </div>
                     </div>
                     {displayStatus !== "confirme" && (
                       <div className="flex gap-2 mt-3 pt-3 border-t border-[#c3c6d6]/30">
@@ -193,22 +193,24 @@ export default function AssistanteDashboard() {
                   return (
                     <li
                       key={apt.id}
-                      className={`flex items-center justify-between px-4 py-3 hover:bg-[#f3f3fd] transition-colors ${apt.status === "termine" ? "opacity-60" : ""}`}
+                      className={`flex items-center justify-between gap-2 px-3 sm:px-4 py-3 hover:bg-[#f3f3fd] transition-colors ${apt.status === "termine" ? "opacity-60" : ""}`}
                     >
-                      <div className="flex items-center gap-3">
-                        <div className="text-center w-12">
+                      <div className="flex items-center gap-3 min-w-0 flex-1">
+                        <div className="text-center w-10 sm:w-12 flex-shrink-0">
                           <div className="text-xs font-bold text-[#191b23]">{apt.time}</div>
                           <div className="text-xs text-[#737785]">{apt.duration}m</div>
                         </div>
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${apt.colorClass}`}>
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${apt.colorClass}`}>
                           {apt.patientInitials}
                         </div>
-                        <div>
-                          <div className="text-sm font-semibold text-[#191b23]">{apt.patientName}</div>
-                          <div className="text-xs text-[#424654]">{apt.reason}</div>
+                        <div className="min-w-0">
+                          <div className="text-sm font-semibold text-[#191b23] truncate">{apt.patientName}</div>
+                          <div className="text-xs text-[#424654] truncate">{apt.reason}</div>
                         </div>
                       </div>
-                      <AppointmentStatusBadge status={displayStatus} />
+                      <div className="flex-shrink-0">
+                        <AppointmentStatusBadge status={displayStatus} />
+                      </div>
                     </li>
                   );
                 })}

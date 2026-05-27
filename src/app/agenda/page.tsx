@@ -68,17 +68,17 @@ export default function AgendaPage() {
 
         {/* Header */}
         <div className="flex items-center justify-between gap-3">
-          <div>
-            <h2 className="text-xl font-bold text-[#191b23]">Agenda</h2>
-            <p className="text-xs text-[#424654]">Sem. 27 mai — 1 juin 2026</p>
+          <div className="min-w-0">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#191b23]">Agenda</h2>
+            <p className="text-xs sm:text-sm text-[#424654] truncate">Sem. 27 mai — 1 juin 2026</p>
           </div>
           <Link
             href="/agenda/nouveau"
-            className="flex items-center gap-1.5 px-3 py-2 bg-[#0045a9] text-white rounded-lg text-sm font-semibold hover:bg-[#003d96] transition-colors shadow-sm flex-shrink-0"
+            className="flex items-center gap-1.5 px-3 py-2 bg-[#0045a9] text-white rounded-lg text-xs sm:text-sm font-semibold hover:bg-[#003d96] transition-colors shadow-sm flex-shrink-0"
           >
             <Plus className="w-4 h-4" />
-            <span className="hidden sm:inline">Nouveau</span>
-            <span className="sm:hidden">+</span>
+            <span className="hidden sm:inline">Nouveau RDV</span>
+            <span className="sm:hidden">Nouveau</span>
           </Link>
         </div>
 
@@ -109,7 +109,7 @@ export default function AgendaPage() {
         </div>
 
         {/* Filtres statuts — scroll horizontal sans débordement */}
-        <div className="flex gap-2 overflow-x-auto no-scrollbar -mx-4 px-4">
+        <div className="flex gap-2 overflow-x-auto no-scrollbar -mx-3 px-3 sm:mx-0 sm:px-0">
           {STATUS_FILTERS.map((f) => (
             <button
               key={f.value}
@@ -173,23 +173,23 @@ export default function AgendaPage() {
         )}
 
         {/* Vue jour — visible sur tous les écrans */}
-        {(viewMode === "jour" || true) && viewMode === "jour" && (
+        {viewMode === "jour" && (
           <div className="space-y-3">
-            {/* Sélecteur de jours — grid fixe, pas de flex overflow */}
-            <div className="grid grid-cols-6 gap-1.5">
+            {/* Sélecteur de jours — grid 6 colonnes, occupe toute la largeur */}
+            <div className="grid grid-cols-6 gap-1 sm:gap-2">
               {FULL_WEEK_DATES.map((date, i) => (
                 <button
                   key={date}
                   onClick={() => setSelectedDay(date)}
-                  className={`flex flex-col items-center py-2 rounded-xl transition-all ${
+                  className={`flex flex-col items-center justify-center py-2 px-0.5 rounded-lg transition-all min-w-0 ${
                     selectedDay === date
                       ? "bg-[#0045a9] text-white shadow-md"
                       : "bg-white border border-[#c3c6d6] text-[#424654] hover:bg-[#f3f3fd]"
                   }`}
                 >
-                  <span className="text-[10px] font-semibold">{WEEK_DAYS[i]}</span>
-                  <span className="text-base font-bold leading-tight">{WEEK_DATES[i]}</span>
-                  <span className={`text-[9px] font-medium ${selectedDay === date ? "text-[#b1c5ff]" : "text-[#737785]"}`}>
+                  <span className="text-[10px] sm:text-xs font-semibold">{WEEK_DAYS[i]}</span>
+                  <span className="text-sm sm:text-lg font-bold leading-tight">{WEEK_DATES[i]}</span>
+                  <span className={`text-[9px] sm:text-xs font-medium ${selectedDay === date ? "text-[#b1c5ff]" : "text-[#737785]"}`}>
                     {getFilteredApts(date).length}
                   </span>
                 </button>
@@ -236,7 +236,9 @@ export default function AgendaPage() {
                       <div className="text-sm font-bold text-[#191b23] truncate">{apt.patientName}</div>
                       <div className="text-xs text-[#424654] truncate">{apt.reason}</div>
                     </div>
-                    <AppointmentStatusBadge status={apt.status} />
+                    <div className="hidden sm:block">
+                      <AppointmentStatusBadge status={apt.status} />
+                    </div>
                   </div>
                   {/* Actions */}
                   <div className="grid grid-cols-2 border-t border-[#c3c6d6]/30">

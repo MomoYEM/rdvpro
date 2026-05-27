@@ -105,17 +105,15 @@ export default function ParametresPage() {
     <DashboardLayout>
       {toast && <Toast message={toast} type="success" onClose={() => setToast(null)} />}
 
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Header */}
-        <div className="flex items-center gap-3">
-          <div>
-            <div className="flex items-center gap-2 text-[#0045a9] mb-1">
-              <Settings className="w-4 h-4" />
-              <span className="text-xs font-bold uppercase tracking-widest">Configuration</span>
-            </div>
-            <h2 className="text-2xl font-bold text-[#191b23]">Paramètres</h2>
-            <p className="text-sm text-[#424654] mt-0.5">Gérez les préférences de votre cabinet.</p>
+        <div>
+          <div className="flex items-center gap-2 text-[#0045a9] mb-1">
+            <Settings className="w-4 h-4" />
+            <span className="text-xs font-bold uppercase tracking-widest">Configuration</span>
           </div>
+          <h2 className="text-xl sm:text-2xl font-bold text-[#191b23]">Paramètres</h2>
+          <p className="text-xs sm:text-sm text-[#424654] mt-0.5">Gérez les préférences de votre cabinet.</p>
         </div>
 
         {/* Restricted notice for assistante */}
@@ -132,19 +130,19 @@ export default function ParametresPage() {
         )}
 
         {/* Tabs */}
-        <div className="flex gap-1 bg-[#f3f3fd] rounded-xl p-1 border border-[#c3c6d6]/50">
+        <div className="flex gap-1 bg-[#f3f3fd] rounded-xl p-1 border border-[#c3c6d6]/50 overflow-x-auto no-scrollbar">
           {TABS.map((tab) => (
             <button
               key={tab.value}
               onClick={() => setActiveTab(tab.value)}
-              className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold transition-all ${
+              className={`flex-1 min-w-0 flex items-center justify-center gap-1.5 px-2 sm:px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold whitespace-nowrap transition-all ${
                 activeTab === tab.value
                   ? "bg-white text-[#0045a9] shadow-sm"
                   : "text-[#424654] hover:text-[#191b23]"
               }`}
             >
               {tab.icon}
-              <span className="hidden sm:inline">{tab.label}</span>
+              <span className="hidden xs:inline sm:inline">{tab.label}</span>
             </button>
           ))}
         </div>
@@ -295,39 +293,38 @@ export default function ParametresPage() {
         {/* Tab: Permissions */}
         {activeTab === "permissions" && (
           <div className="bg-white rounded-2xl shadow-sm border border-[#c3c6d6]/50 overflow-hidden">
-            <div className="p-5 border-b border-[#c3c6d6]/30">
+            <div className="p-4 sm:p-5 border-b border-[#c3c6d6]/30">
               <h3 className="text-base font-semibold text-[#191b23]">Matrice des permissions</h3>
               <p className="text-xs text-[#737785] mt-0.5">
                 Définit les droits d&apos;accès par rôle.
               </p>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="bg-[#f3f3fd] border-b border-[#c3c6d6]/30">
-                    <th className="text-left py-3 px-5 text-xs font-semibold text-[#424654] uppercase tracking-wide">Fonctionnalité</th>
-                    <th className="text-center py-3 px-5 text-xs font-semibold text-[#0045a9] uppercase tracking-wide">Dentiste</th>
-                    <th className="text-center py-3 px-5 text-xs font-semibold text-[#006a6a] uppercase tracking-wide">Assistante</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#c3c6d6]/20">
-                  {PERMISSIONS.map((p) => (
-                    <tr key={p.feature} className={!p.assistante ? "bg-[#fff8f6]" : ""}>
-                      <td className="py-3 px-5 text-sm text-[#424654]">{p.feature}</td>
-                      <td className="py-3 px-5 text-center">
-                        {p.dentiste
-                          ? <CheckCircle className="w-4 h-4 text-[#006a6a] mx-auto" />
-                          : <X className="w-4 h-4 text-[#ba1a1a]/40 mx-auto" />}
-                      </td>
-                      <td className="py-3 px-5 text-center">
-                        {p.assistante
-                          ? <CheckCircle className="w-4 h-4 text-[#006a6a] mx-auto" />
-                          : <Lock className="w-4 h-4 text-[#ba1a1a]/50 mx-auto" />}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="divide-y divide-[#c3c6d6]/20">
+              <div className="bg-[#f3f3fd] grid grid-cols-[1fr_auto_auto] gap-3 px-3 sm:px-5 py-3">
+                <span className="text-xs font-semibold text-[#424654] uppercase tracking-wide">Fonctionnalité</span>
+                <span className="w-16 text-center text-xs font-semibold text-[#0045a9] uppercase tracking-wide">Dentiste</span>
+                <span className="w-16 text-center text-xs font-semibold text-[#006a6a] uppercase tracking-wide">Assist.</span>
+              </div>
+              {PERMISSIONS.map((p) => (
+                <div
+                  key={p.feature}
+                  className={`grid grid-cols-[1fr_auto_auto] gap-3 px-3 sm:px-5 py-3 items-center ${
+                    !p.assistante ? "bg-[#fff8f6]" : ""
+                  }`}
+                >
+                  <span className="text-xs sm:text-sm text-[#424654]">{p.feature}</span>
+                  <span className="w-16 flex justify-center">
+                    {p.dentiste
+                      ? <CheckCircle className="w-4 h-4 text-[#006a6a]" />
+                      : <X className="w-4 h-4 text-[#ba1a1a]/40" />}
+                  </span>
+                  <span className="w-16 flex justify-center">
+                    {p.assistante
+                      ? <CheckCircle className="w-4 h-4 text-[#006a6a]" />
+                      : <Lock className="w-4 h-4 text-[#ba1a1a]/50" />}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         )}
